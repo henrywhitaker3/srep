@@ -7,6 +7,7 @@ import (
 	"fmt"
 
 	"github.com/henrywhitaker3/srep/internal/cmd/list"
+	"github.com/henrywhitaker3/srep/internal/cmd/run"
 	"github.com/spf13/cobra"
 )
 
@@ -24,6 +25,7 @@ func BuildRootCmd(version, commit, date string) *cobra.Command {
 	cmd.SetVersionTemplate(fmt.Sprintf("%s version %s commit %s built at %s\n", cmd.Use, version, commit, date))
 
 	cmd.AddCommand(list.NewListCommand())
+	cmd.AddCommand(run.NewRunCommand())
 
 	return cmd
 }

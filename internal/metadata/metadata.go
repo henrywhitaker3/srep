@@ -3,6 +3,7 @@ package metadata
 import (
 	_ "embed"
 	"encoding/json"
+	"fmt"
 )
 
 //go:embed metadata.json
@@ -25,4 +26,19 @@ func Get() (*Metadata, error) {
 	}
 
 	return md, nil
+}
+
+func Find(name string) (*Scenario, error) {
+	md, err := Get()
+	if err != nil {
+		return nil, err
+	}
+
+	for _, s := range *md {
+		if s.Name == name {
+			return &s, nil
+		}
+	}
+
+	return nil, fmt.Errorf("unknown senario %s", name)
 }
