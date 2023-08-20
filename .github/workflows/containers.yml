@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  release:
+  build:
     runs-on: ubuntu-latest
     permissions:
       packages: write
@@ -36,4 +36,5 @@ jobs:
               name=$(cat $scenario/metadata.json | jq -r '.name')
               tag=$(cat $scenario/metadata.json | jq -r '.version')
               echo "Building ghcr.io/henrywhitaker3/srep/$name:$tag"
+            fi
           done
