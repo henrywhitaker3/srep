@@ -2,5 +2,9 @@
     "name": "mango",
     "description": "",
     "difficulty": "easy",
-    "version": "1.0.0"
+    "version": "1.0.0",
+    "tags": [
+        "general",
+        "linux"
+    ]
 }

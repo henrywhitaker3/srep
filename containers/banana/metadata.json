@@ -2,5 +2,8 @@
     "name": "banana",
     "description": "A redis instance is listening and should be accessible on all interfaces. After upgrading it from redis v6 to v7, it is now rejecting connections that don't originate locally.",
     "difficulty": "medium",
-    "version": "1.0.0"
+    "version": "1.0.0",
+    "tags": [
+        "redis"
+    ]
 }
