@@ -1,6 +1,7 @@
 package docker
 
 import (
+	"bytes"
 	"context"
 	"fmt"
 	"io"
@@ -41,8 +42,9 @@ func (d *Docker) Create(s metadata.Scenario) (driver.Instance, error) {
 func (d *Docker) Run(ctx context.Context, i driver.Instance) error {
 	c := i.(*Container)
 
-	// d.pullImage(ctx, c.Image)
-
+	if err := d.pullImage(ctx, c.Image); err != nil {
+		return err
+	}
 	return d.createContainer(ctx, c)
 }
 
@@ -87,10 +89,14 @@ func (d *Docker) Check(ctx context.Context, i driver.Instance) bool {
 }
 
 func (d *Docker) pullImage(ctx context.Context, image string) error {
-	_, err := d.client.ImagePull(ctx, image, types.ImagePullOptions{})
+	reader, err := d.client.ImagePull(ctx, image, types.ImagePullOptions{})
 	if err != nil {
 		return err
 	}
+	defer reader.Close()
+
+	buf := new(bytes.Buffer)
+	io.Copy(buf, reader)
 	return nil
 }
 

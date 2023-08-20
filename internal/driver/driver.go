@@ -7,7 +7,7 @@ import (
 )
 
 var (
-	ImagePrefix = "henrywhitaker3/srep-"
+	ImagePrefix = "ghcr.io/henrywhitaker3/srep/"
 )
 
 type Instance interface{}
