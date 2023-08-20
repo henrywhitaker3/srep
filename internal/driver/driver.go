@@ -6,6 +6,10 @@ import (
 	"github.com/henrywhitaker3/srep/internal/metadata"
 )
 
+var (
+	ImagePrefix = "henrywhitaker3/srep-"
+)
+
 type Instance interface{}
 
 type Driver interface {

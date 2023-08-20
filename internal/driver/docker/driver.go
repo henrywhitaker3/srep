@@ -32,7 +32,7 @@ func NewDockerDriver() (*Docker, error) {
 func (d *Docker) Create(s metadata.Scenario) (driver.Instance, error) {
 	instance := Container{
 		Name:  s.Name,
-		Image: fmt.Sprintf("henrywhitaker3/srep-%s:latest", s.Name),
+		Image: fmt.Sprintf("%s%s:%s", driver.ImagePrefix, s.Name, s.Version),
 	}
 
 	return &instance, nil
