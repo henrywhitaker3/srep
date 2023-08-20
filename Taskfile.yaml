@@ -6,4 +6,4 @@ includes:
 tasks:
   metadata:
     cmds:
-      - ./hack/generate_metadata.py > metadata.json
+      - ./hack/generate_metadata.py > internal/metadata/metadata.json

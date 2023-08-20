@@ -11,4 +11,4 @@ go.work
 charts/argo-zombies/values.test.yaml
 .vscode/settings.json
 
-/metadata.json
+internal/metadata/metadata.json
