@@ -6,7 +6,7 @@ package main
 import (
 	"os"
 
-	"github.com/henrywhitaker3/srep/cmd/root"
+	"github.com/henrywhitaker3/srep/internal/cmd/root"
 )
 
 var (

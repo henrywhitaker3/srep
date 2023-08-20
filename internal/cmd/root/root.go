@@ -6,7 +6,7 @@ package root
 import (
 	"fmt"
 
-	"github.com/henrywhitaker3/srep/cmd/list"
+	"github.com/henrywhitaker3/srep/internal/cmd/list"
 	"github.com/spf13/cobra"
 )
 
