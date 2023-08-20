@@ -3,6 +3,8 @@ package docker
 import (
 	"context"
 	"fmt"
+	"io"
+	"strings"
 
 	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/api/types/container"
@@ -60,7 +62,28 @@ func (d *Docker) Kill(ctx context.Context, i driver.Instance) error {
 }
 
 func (d *Docker) Check(ctx context.Context, i driver.Instance) bool {
-	return true
+	c := i.(*Container)
+	respID, err := d.client.ContainerExecCreate(ctx, c.Name, types.ExecConfig{
+		Cmd:          []string{"/opt/check.sh"},
+		AttachStdout: true,
+	})
+	if err != nil {
+		return false
+	}
+
+	resp, err := d.client.ContainerExecAttach(ctx, respID.ID, types.ExecStartCheck{})
+	if err != nil {
+		return false
+	}
+	defer resp.Close()
+
+	out := new(strings.Builder)
+	if _, err := io.Copy(out, resp.Reader); err != nil {
+		return false
+	}
+
+	// Check it is equal to start, nil *6, text start OK
+	return out.String() == string([]byte{1, 0, 0, 0, 0, 0, 0, 2, 79, 75})
 }
 
 func (d *Docker) pullImage(ctx context.Context, image string) error {
