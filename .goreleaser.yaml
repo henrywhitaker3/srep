@@ -8,6 +8,7 @@ builds:
     goos:
       - linux
       - darwin
+      - windows
 
     main: main.go
 
@@ -16,7 +17,7 @@ archives:
     # this name template makes the OS and Arch compatible with the results of uname.
     name_template: >-
       {{ .ProjectName }}_
-      {{- title .Os }}_
+      {{- .Os }}_
       {{- if eq .Arch "amd64" }}x86_64
       {{- else if eq .Arch "386" }}i386
       {{- else }}{{ .Arch }}{{ end }}
@@ -31,11 +32,6 @@ changelog:
     exclude:
       - '^docs:'
       - '^test:'
-dockers:
-  - dockerfile: release.Dockerfile
-    image_templates:
-      - ghcr.io/henrywhitaker3/srep:{{ .Tag }}
-      - ghcr.io/henrywhitaker3/srep:latest
 
 # The lines beneath this are called `modelines`. See `:help modeline`
 # Feel free to remove those if you don't want/use them.
