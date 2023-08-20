@@ -10,6 +10,7 @@ import (
 	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/api/types/container"
 	"github.com/docker/docker/client"
+	"github.com/docker/go-connections/nat"
 	"github.com/henrywhitaker3/srep/internal/driver"
 	"github.com/henrywhitaker3/srep/internal/metadata"
 )
@@ -34,6 +35,7 @@ func (d *Docker) Create(s metadata.Scenario) (driver.Instance, error) {
 	instance := Container{
 		Name:  s.Name,
 		Image: fmt.Sprintf("%s%s:%s", driver.ImagePrefix, s.Name, s.Version),
+		Ports: s.Ports,
 	}
 
 	return &instance, nil
@@ -101,13 +103,43 @@ func (d *Docker) pullImage(ctx context.Context, image string) error {
 }
 
 func (d *Docker) createContainer(ctx context.Context, c *Container) error {
-	resp, err := d.client.ContainerCreate(ctx, &container.Config{
-		Image: c.Image,
-	}, nil, nil, nil, c.Name)
+	resp, err := d.client.ContainerCreate(ctx, d.buildContainerConfig(c), d.buildHostConfig(c), nil, nil, c.Name)
 	if err != nil {
 		return err
 	}
 	c.Id = resp.ID
 
 	return d.client.ContainerStart(ctx, c.Id, types.ContainerStartOptions{})
+}
+
+func (d *Docker) buildContainerConfig(c *Container) *container.Config {
+	ct := &container.Config{
+		Image: c.Image,
+	}
+
+	ps := nat.PortSet{}
+	for _, port := range c.Ports {
+		ps[nat.Port(port.Container)] = struct{}{}
+	}
+	ct.ExposedPorts = ps
+
+	return ct
+}
+
+func (d *Docker) buildHostConfig(c *Container) *container.HostConfig {
+	hc := &container.HostConfig{}
+
+	pm := nat.PortMap{}
+
+	for _, port := range c.Ports {
+		pm[nat.Port(port.Container)] = []nat.PortBinding{
+			{
+				HostIP:   "0.0.0.0",
+				HostPort: port.Host,
+			},
+		}
+	}
+	hc.PortBindings = pm
+
+	return hc
 }

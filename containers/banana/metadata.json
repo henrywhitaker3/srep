@@ -5,5 +5,11 @@
     "version": "1.0.0",
     "tags": [
         "redis"
+    ],
+    "ports": [
+        {
+            "host": "6379",
+            "container": "6379"
+        }
     ]
 }

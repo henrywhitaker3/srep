@@ -17,6 +17,12 @@ type Scenario struct {
 	Difficulty  string   `json:"difficulty"`
 	Version     string   `json:"version"`
 	Tags        []string `json:"tags"`
+	Ports       []Port   `json:"ports"`
+}
+
+type Port struct {
+	Host      string `json:"host"`
+	Container string `json:"container"`
 }
 
 func Get() (*Metadata, error) {
