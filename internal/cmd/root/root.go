@@ -6,6 +6,7 @@ package root
 import (
 	"fmt"
 
+	"github.com/henrywhitaker3/srep/internal/cmd/check"
 	"github.com/henrywhitaker3/srep/internal/cmd/list"
 	"github.com/henrywhitaker3/srep/internal/cmd/run"
 	"github.com/spf13/cobra"
@@ -26,6 +27,7 @@ func BuildRootCmd(version, commit, date string) *cobra.Command {
 
 	cmd.AddCommand(list.NewListCommand())
 	cmd.AddCommand(run.NewRunCommand())
+	cmd.AddCommand(check.NewCheckCommand())
 
 	return cmd
 }
