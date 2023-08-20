@@ -26,10 +26,22 @@ func NewRunCommand() *cobra.Command {
 			if err != nil {
 				return err
 			}
-			fmt.Println(s)
 
-			d := getDriver()
-			d.Create(*s)
+			d, err := getDriver()
+			if err != nil {
+				return err
+			}
+			instance, err := d.Create(*s)
+			if err != nil {
+				return err
+			}
+			if err := d.Run(cmd.Context(), instance); err != nil {
+				return err
+			}
+
+			fmt.Printf("To connect to the instance, run the following command:\n\n")
+			fmt.Println(d.ConnectionCommand(instance))
+			fmt.Printf("\nWhen you have finished, you can run `srep check %s` to check your work\n", args[0])
 
 			return nil
 		},
@@ -40,9 +52,9 @@ func NewRunCommand() *cobra.Command {
 	return cmd
 }
 
-func getDriver() driver.Driver {
+func getDriver() (driver.Driver, error) {
 	if k8s {
 
 	}
-	return &docker.Docker{}
+	return docker.NewDockerDriver()
 }

@@ -1,15 +1,22 @@
 package driver
 
-import "github.com/henrywhitaker3/srep/internal/metadata"
+import (
+	"context"
 
-type Instance interface {
-	// Get a shell into the running instance
-	Shell() error
-	// Kill the instance and clean it up
-	Kill() error
-}
+	"github.com/henrywhitaker3/srep/internal/metadata"
+)
+
+type Instance interface{}
 
 type Driver interface {
 	// Create a new instance of the scenario
-	Create(metadata.Scenario) (*Instance, error)
+	Create(metadata.Scenario) (Instance, error)
+	// Run a new instance
+	Run(context.Context, Instance) error
+	// Get the connection command
+	ConnectionCommand(Instance) string
+	// Kill and remove the instance
+	Kill(context.Context, Instance) error
+	// Check the work in the instance
+	Check(context.Context, Instance) bool
 }
