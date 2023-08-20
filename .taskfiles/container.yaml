@@ -1,0 +1,23 @@
+version: "3"
+
+tasks:
+  build:
+    vars:
+      NAME: '{{ .NAME | default "base" }}'
+    cmds:
+      - docker build containers/{{ .NAME }} --tag henrywhitaker3/srep-{{ .NAME }}:latest
+
+  run:
+    vars:
+      NAME: '{{ .NAME | default "base" }}'
+    interactive: true
+    cmds:
+      - docker run --name {{ .NAME }} -d henrywhitaker3/srep-{{ .NAME }}:latest
+      - docker exec -it {{ .NAME }} bash
+
+  kill:
+    vars:
+      NAME: '{{ .NAME | default "base" }}'
+    cmds:
+      - docker kill {{ .NAME }}
+      - docker rm {{ .NAME }}

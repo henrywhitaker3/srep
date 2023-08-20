@@ -1,20 +1,4 @@
 version: "3"
 
 includes:
-  build: .taskfiles/build.yaml
-
-tasks:
-  run:
-    vars:
-      NAME: '{{ .NAME | default "base" }}'
-    interactive: true
-    cmds:
-      - docker run --name {{ .NAME }} -d henrywhitaker3/srep-{{ .NAME }}:latest
-      - docker exec -it {{ .NAME }} bash
-
-  kill:
-    vars:
-      NAME: '{{ .NAME | default "base" }}'
-    cmds:
-      - docker kill {{ .NAME }}
-      - docker rm {{ .NAME }}
+  ct: .taskfiles/container.yaml

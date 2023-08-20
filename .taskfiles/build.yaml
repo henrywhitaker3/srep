@@ -1,9 +1,0 @@
-version: "3"
-
-tasks:
-  container:
-    vars:
-      NAME: '{{ .NAME | default "base" }}'
-    cmds:
-      - docker build containers/{{ .NAME }} --tag henrywhitaker3/srep-{{ .NAME }}:latest
-
