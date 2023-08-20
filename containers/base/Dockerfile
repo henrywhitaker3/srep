@@ -1,5 +1,10 @@
 FROM ubuntu:22.04
 
-COPY files/entrypoint.sh /entrypoint.sh
+RUN apt-get update && \
+    apt-get install -y software-properties-common \
+                        net-tools \
+                        vim
+
+COPY root/ /
 
 ENTRYPOINT [ "/entrypoint.sh" ]
