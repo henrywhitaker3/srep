@@ -8,7 +8,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: contains(github.event.head_commit.message, 'build containers')
+    if: contains(github.event.head_commit.message, '(containers)')
     permissions:
       packages: write
       contents: write
@@ -37,9 +37,16 @@ jobs:
             if [ $scenario != "containers/base" ]; then
               name=$(cat $scenario/metadata.json | jq -r '.name')
               tag=$(cat $scenario/metadata.json | jq -r '.version')
-              echo "Building ghcr.io/henrywhitaker3/srep/$name:$tag"
+              image="ghcr.io/henrywhitaker3/srep/$name:$tag"
 
-              docker build $scenario --tag ghcr.io/henrywhitaker3/srep/$name:$tag
-              docker push ghcr.io/henrywhitaker3/srep/$name:$tag
+              docker manifest inspect $image > /dev/null
+
+              if [ $? -eq 0 ]; then
+                echo "$image already exists. Skipping..."
+              else
+                echo "Building $image"
+                docker build $scenario --tag $image
+                docker push $image
+              fi
             fi
           done
