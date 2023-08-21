@@ -39,9 +39,12 @@ jobs:
               tag=$(cat $scenario/metadata.json | jq -r '.version')
               image="ghcr.io/henrywhitaker3/srep/$name:$tag"
 
+              set +e
               docker manifest inspect $image > /dev/null
+              rc=$?
+              set -e
 
-              if [ $? -eq 0 ]; then
+              if [ $rc -eq 0 ]; then
                 echo "$image already exists. Skipping..."
               else
                 echo "Building $image"
