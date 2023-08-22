@@ -6,6 +6,7 @@ package check
 import (
 	"fmt"
 
+	"github.com/henrywhitaker3/srep/internal/cmd"
 	"github.com/henrywhitaker3/srep/internal/driver"
 	"github.com/henrywhitaker3/srep/internal/driver/docker"
 	"github.com/henrywhitaker3/srep/internal/metadata"
@@ -19,9 +20,10 @@ var (
 
 func NewCheckCommand() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "check [scenario]",
-		Short: "Check the specified practice scenario",
-		Args:  cobra.ExactArgs(1),
+		Use:       "check [scenario]",
+		Short:     "Check the specified practice scenario",
+		Args:      cobra.ExactArgs(1),
+		ValidArgs: cmd.ScenarioCompletion(),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			s, err := metadata.Find(args[0])
 			if err != nil {

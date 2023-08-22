@@ -6,6 +6,7 @@ package run
 import (
 	"fmt"
 
+	"github.com/henrywhitaker3/srep/internal/cmd"
 	"github.com/henrywhitaker3/srep/internal/driver"
 	"github.com/henrywhitaker3/srep/internal/driver/docker"
 	"github.com/henrywhitaker3/srep/internal/metadata"
@@ -18,9 +19,10 @@ var (
 
 func NewRunCommand() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "run [scenario]",
-		Short: "Run the specified practice scenarios",
-		Args:  cobra.ExactArgs(1),
+		Use:       "run [scenario]",
+		Short:     "Run the specified practice scenarios",
+		Args:      cobra.ExactArgs(1),
+		ValidArgs: cmd.ScenarioCompletion(),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			s, err := metadata.Find(args[0])
 			if err != nil {
