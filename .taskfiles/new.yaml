@@ -1,0 +1,21 @@
+version: "3"
+
+tasks:
+  scenario:
+    preconditions:
+      - sh: |
+          [ -d "containers/{{ .NAME }}" ] && exit 1 || exit 0
+        msg: "{{ .NAME }} already exists"
+    env:
+      NAME: '{{ .NAME }}'
+    cmds:
+      - mkdir -p containers/{{ .NAME }}
+      - mkdir -p containers/{{ .NAME }}/root
+      - mkdir -p containers/{{ .NAME }}/root/opt
+      - mkdir -p containers/{{ .NAME }}/root/opt/run
+      - cat .templates/scenario/Dockerfile | envsubst > containers/{{ .NAME }}/Dockerfile
+      - cat .templates/scenario/metadata.json | envsubst > containers/{{ .NAME }}/metadata.json
+      - cat .templates/scenario/check.sh | envsubst > containers/{{ .NAME }}/root/opt/check.sh
+      - cat .templates/scenario/run.sh | envsubst > containers/{{ .NAME }}/root/opt/run/{{ .NAME }}.sh
+      - chmod +x containers/{{ .NAME }}/root/opt/check.sh
+      - chmod +x containers/{{ .NAME }}/root/opt/run/{{ .NAME }}.sh
