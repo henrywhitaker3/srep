@@ -2,7 +2,7 @@
     "name": "banana",
     "description": "A redis instance is listening and should be accessible on all interfaces. After upgrading it from redis v6 to v7, it is now rejecting connections that don't originate locally.\nThere is a script `/opt/restart.sh` that will restart the redis server for you whilst you try to fix the issue.",
     "difficulty": "medium",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "tags": [
         "redis"
     ],
