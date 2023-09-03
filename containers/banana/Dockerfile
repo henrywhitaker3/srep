@@ -1,4 +1,4 @@
-FROM ghcr.io/henrywhitaker3/srep/base:1.0.0
+FROM ghcr.io/henrywhitaker3/srep/base:1.0.1
 
 RUN add-apt-repository ppa:redislabs/redis
 
