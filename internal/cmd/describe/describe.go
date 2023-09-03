@@ -6,7 +6,7 @@ package describe
 import (
 	"fmt"
 
-	"github.com/henrywhitaker3/srep/internal/cmd"
+	"github.com/henrywhitaker3/srep/internal/cmd/common"
 	"github.com/henrywhitaker3/srep/internal/metadata"
 	"github.com/spf13/cobra"
 )
@@ -16,7 +16,7 @@ func NewDescribeCommand() *cobra.Command {
 		Use:       "describe [scenario]",
 		Short:     "Describe the specified practice scenario",
 		Args:      cobra.ExactArgs(1),
-		ValidArgs: cmd.ScenarioCompletion(),
+		ValidArgs: common.ScenarioCompletion(),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			s, err := metadata.Find(args[0])
 			if err != nil {
