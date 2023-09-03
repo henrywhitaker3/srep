@@ -21,3 +21,7 @@ tasks:
     cmds:
       - docker kill {{ .NAME }}
       - docker rm {{ .NAME }}
+
+  bump:
+    cmds:
+      - ./hack/bump_containers.sh
