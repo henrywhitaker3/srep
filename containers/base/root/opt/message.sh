@@ -4,5 +4,5 @@ echo CiAgICBfX19fX19fX19fXyBfX19fX19fX19fXwogICAgLyAgX19ffCBfX18gXCAgX19ffCBfX18
 
 if [ -f "/opt/metadata.json" ]; then
     description=$(cat /opt/metadata.json | jq -r '.description')
-    printf "$description\n"
+    printf "$description\n\n"
 fi

@@ -9,6 +9,6 @@ RUN apt-get update && \
 COPY metadata.json /opt
 COPY root/ /
 
-RUN echo "/opt/message.sh" >> /root/.bashrc
+WORKDIR /root
 
 ENTRYPOINT [ "/entrypoint.sh" ]
