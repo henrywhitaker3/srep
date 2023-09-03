@@ -26,7 +26,7 @@ jobs:
 
       - name: Get base tag
         run: |
-          BASE_TAG=$(cat containers/base/metadata.json | jq -r '.version')
+          echo "BASE_TAG=$(cat containers/base/metadata.json | jq -r '.version')" >> $GITHUB_ENV
 
       - name: Build and push base image
         uses: docker/build-push-action@v4
@@ -35,7 +35,7 @@ jobs:
           push: true
           tags: |
             ghcr.io/henrywhitaker3/srep/base:latest
-            ghcr.io/henrywhitaker3/srep/base:$BASE_TAG
+            ghcr.io/henrywhitaker3/srep/base:${{ env.BASE_TAG }}
 
       - name: Build scenario containers
         run: |
