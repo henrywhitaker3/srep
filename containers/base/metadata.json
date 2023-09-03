@@ -1,0 +1,8 @@
+{
+    "name": "base",
+    "description": "The base image all other containers build from.",
+    "difficulty": "n/a",
+    "version": "1.0.0",
+    "tags": [],
+    "ports": []
+}

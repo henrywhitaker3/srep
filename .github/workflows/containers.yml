@@ -24,12 +24,18 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Get base tag
+        run: |
+          BASE_TAG=$(cat containers/base/metadata.json | jq -r '.version')
+
       - name: Build and push base image
         uses: docker/build-push-action@v4
         with:
           context: "containers/base"
           push: true
-          tags: ghcr.io/henrywhitaker3/srep/base:latest
+          tags: |
+            ghcr.io/henrywhitaker3/srep/base:latest
+            ghcr.io/henrywhitaker3/srep/base:$BASE_TAG
 
       - name: Build scenario containers
         run: |
