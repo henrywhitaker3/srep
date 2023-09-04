@@ -1,0 +1,22 @@
+{
+    "name": "salad",
+    "description": "The server is running k3s, which you can access using `kubectl`.\nThere is an ingress in the `salad` namespace for which cert-manager should have issued a certificate.\nFind out why, and fix the issue.",
+    "difficulty": "hard",
+    "version": "1.0.0",
+    "tags": [
+        "kubernetes",
+        "cert-manager"
+    ],
+    "ports": [
+        {
+            "container": "80",
+            "host": "80"
+        },
+        {
+            "container": "443",
+            "host": "443"
+        }
+    ],
+    "volumes": [],
+    "privileged": true
+}

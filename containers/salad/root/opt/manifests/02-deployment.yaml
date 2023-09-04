@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: salad
+  namespace: salad
+spec:
+  selector:
+    matchLabels:
+      app: salad
+  template:
+    metadata:
+      labels:
+        app: salad
+    spec:
+      containers:
+      - name: echo
+        image: ealen/echo-server:latest
+        resources: {}
+        ports:
+        - containerPort: 80
+          name: http
