@@ -1,7 +1,7 @@
 {
     "name": "salad",
-    "description": "The server is running k3s, which you can access using `kubectl`.\nThere is an ingress in the `salad` namespace for which cert-manager should have issued a certificate.\nFind out why, and fix the issue.",
-    "difficulty": "hard",
+    "description": "The server is running k3s, which you can access using `kubectl`.\nThere is an ingress in the `salad` namespace which isn't being picked up by traefik\nFind out why, and fix the issue.",
+    "difficulty": "medium",
     "version": "1.0.0",
     "tags": [
         "kubernetes",
