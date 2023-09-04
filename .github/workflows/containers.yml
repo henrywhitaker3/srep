@@ -37,10 +37,23 @@ jobs:
             ghcr.io/henrywhitaker3/srep/base:latest
             ghcr.io/henrywhitaker3/srep/base:${{ env.BASE_TAG }}
 
+      - name: Get k3s tag
+        run: |
+          echo "K3S_TAG=$(cat containers/k3s/metadata.json | jq -r '.version')" >> $GITHUB_ENV
+
+      - name: Build and push base image
+        uses: docker/build-push-action@v4
+        with:
+          context: "containers/k3s"
+          push: true
+          tags: |
+            ghcr.io/henrywhitaker3/srep/k3s:latest
+            ghcr.io/henrywhitaker3/srep/k3s:${{ env.K3S_TAG }}
+
       - name: Build scenario containers
         run: |
           for scenario in containers/*; do
-            if [ $scenario != "containers/base" ]; then
+            if [ $scenario != "containers/base" ] && [ $scenario != "containers/k3s" ]; then
               name=$(cat $scenario/metadata.json | jq -r '.name')
               tag=$(cat $scenario/metadata.json | jq -r '.version')
               image="ghcr.io/henrywhitaker3/srep/$name:$tag"
