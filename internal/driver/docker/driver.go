@@ -9,6 +9,7 @@ import (
 
 	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/api/types/container"
+	"github.com/docker/docker/api/types/mount"
 	"github.com/docker/docker/client"
 	"github.com/docker/go-connections/nat"
 	"github.com/henrywhitaker3/srep/internal/driver"
@@ -33,9 +34,11 @@ func NewDockerDriver() (*Docker, error) {
 
 func (d *Docker) Create(s metadata.Scenario) (driver.Instance, error) {
 	instance := Container{
-		Name:  s.Name,
-		Image: fmt.Sprintf("%s%s:%s", driver.ImagePrefix, s.Name, s.Version),
-		Ports: s.Ports,
+		Name:       s.Name,
+		Image:      fmt.Sprintf("%s%s:%s", driver.ImagePrefix, s.Name, s.Version),
+		Ports:      s.Ports,
+		Volumes:    s.Volumes,
+		Privileged: s.Privileged,
 	}
 
 	return &instance, nil
@@ -127,7 +130,9 @@ func (d *Docker) buildContainerConfig(c *Container) *container.Config {
 }
 
 func (d *Docker) buildHostConfig(c *Container) *container.HostConfig {
-	hc := &container.HostConfig{}
+	hc := &container.HostConfig{
+		Privileged: c.Privileged,
+	}
 
 	pm := nat.PortMap{}
 
@@ -140,6 +145,17 @@ func (d *Docker) buildHostConfig(c *Container) *container.HostConfig {
 		}
 	}
 	hc.PortBindings = pm
+
+	vols := []mount.Mount{}
+
+	for _, vol := range c.Volumes {
+		vols = append(vols, mount.Mount{
+			Type:   mount.TypeBind,
+			Source: vol.Host,
+			Target: vol.Container,
+		})
+	}
+	hc.Mounts = vols
 
 	return hc
 }

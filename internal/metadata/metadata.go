@@ -18,9 +18,16 @@ type Scenario struct {
 	Version     string   `json:"version"`
 	Tags        []string `json:"tags"`
 	Ports       []Port   `json:"ports"`
+	Volumes     []Volume `json:"volumes"`
+	Privileged  bool     `json:"privileged"`
 }
 
 type Port struct {
+	Host      string `json:"host"`
+	Container string `json:"container"`
+}
+
+type Volume struct {
 	Host      string `json:"host"`
 	Container string `json:"container"`
 }
