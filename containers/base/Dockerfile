@@ -4,7 +4,9 @@ RUN apt-get update && \
     apt-get install -y software-properties-common \
                         net-tools \
                         vim \
-                        jq
+                        jq \
+                        curl \
+                        wget
 
 COPY metadata.json /opt
 COPY root/ /

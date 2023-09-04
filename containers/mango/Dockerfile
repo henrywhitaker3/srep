@@ -1,4 +1,4 @@
-FROM ghcr.io/henrywhitaker3/srep/base:1.0.1
+FROM ghcr.io/henrywhitaker3/srep/base:1.0.2
 
 RUN apt-get update && \
     apt-get install -y python3 \
