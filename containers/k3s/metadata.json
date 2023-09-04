@@ -1,0 +1,10 @@
+{
+    "name": "k3s",
+    "description": "The base image for k3s scenarios",
+    "difficulty": "n/a",
+    "version": "v1.27.4",
+    "tags": [
+        "kubernetes",
+        "k3s"
+    ]
+}
