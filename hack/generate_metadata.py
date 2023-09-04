@@ -6,7 +6,7 @@ import glob
 combined = []
 
 for file in glob.glob("containers/**/metadata.json"):
-    if file == "containers/base/metadata.json":
+    if file == "containers/base/metadata.json" or file == "containers/k3s/metadata.json":
         continue
 
     with open(file) as opened:

@@ -23,7 +23,7 @@ updateScenarioVersion() {
 latest=$(cat containers/base/metadata.json | jq -r .version)
 
 for scenario in containers/*; do
-    if [ $scenario != "containers/base" ]; then
+    if [ $scenario != "containers/base" ] && [ $scenario != "containers/k3s" ]; then
         updateDockerFrom "$scenario/Dockerfile" $latest
         updateScenarioVersion "$scenario/metadata.json"
     fi
