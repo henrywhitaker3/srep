@@ -4,5 +4,7 @@
     "difficulty": "easy",
     "version": "1.0.0",
     "tags": [],
-    "ports": []
+    "ports": [],
+    "volumes": [],
+    "privileged": false
 }

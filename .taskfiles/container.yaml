@@ -5,14 +5,14 @@ tasks:
     vars:
       NAME: '{{ .NAME | default "base" }}'
     cmds:
-      - docker build containers/{{ .NAME }} --tag henrywhitaker3/srep-{{ .NAME }}:$(cat containers/{{ .NAME }}/metadata.json | jq -r '.version')
+      - docker build containers/{{ .NAME }} --tag ghcr.io/henrywhitaker3/srep/{{ .NAME }}:$(cat containers/{{ .NAME }}/metadata.json | jq -r '.version')
 
   run:
     vars:
       NAME: '{{ .NAME | default "base" }}'
     interactive: true
     cmds:
-      - docker run --name {{ .NAME }} -d henrywhitaker3/srep-{{ .NAME }}:$(cat containers/{{ .NAME }}/metadata.json | jq -r '.version')
+      - docker run --name {{ .NAME }} -d ghcr.io/henrywhitaker3/srep/{{ .NAME }}:$(cat containers/{{ .NAME }}/metadata.json | jq -r '.version')
       - docker exec -it {{ .NAME }} bash
 
   kill:
