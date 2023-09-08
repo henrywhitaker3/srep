@@ -8,4 +8,4 @@ RUN apt-get update && \
                         busybox \
                         iptables
 
-COPY --from=rancher/k3s:v1.27.4-k3s1 /bin/ /usr/bin/
+COPY --from=rancher/k3s:v1.28.1-k3s1 /bin/ /usr/bin/
